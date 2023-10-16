@@ -21,7 +21,7 @@ Anggota Kelompok :
 - [Soal 14](#14)
 - [Soal 15](#15)
 
-### <a name="1"></a>Soal 1
+### [Soal 1] (#1)
  Membuat topologi sesuai dengan pembagian.
 - Yudhistira : DNS master
 - Werkudara: DNS Slave
