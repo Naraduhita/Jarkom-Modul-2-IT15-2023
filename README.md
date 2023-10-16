@@ -33,9 +33,12 @@ Berikut topologi yang telah dibuat:
 
 ### <a name="2"></a> Soal 2
 **Deskripsi:** Membuat website utama pada node arjuna dengan akses ke arjuna.IT15.com 
+
 **Pandudewanata**
 - Masuk ke node `pandudewanata` dengan menggunakan ` telnet 192.168.0.3 5002`
 - Ketikkan ` iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE -s 10.71.0.0/16`
 - Maka akan didapatkan `nameserver 192.168.122.1` dalam ` /etc/resolv.conf`
 - Untuk memastikan telah terhubung dengan internet maka lakukan `ping google.com -c 5`
-  
+**Yudhitira**
+- Masuk ke node `Yudhistira` dengan menggunakan `telnet 192.168.0.3 5013`
+- 
