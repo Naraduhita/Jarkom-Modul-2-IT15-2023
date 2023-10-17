@@ -798,6 +798,12 @@ rm -r abimanyu.IT15/abimanyu.yyy.com
     ServerAdmin webmaster@localhost
     DocumentRoot /var/www/abimanyu.IT15
 
+    <Directory /var/www/abimanyu.IT15>
+      Options +Indexes
+    </Directory>
+
+        Alias / /var/www/abimanyu.IT15/home.html
+
     RewriteEngine On
 
     ErrorLog ${APACHE_LOG_DIR}/error.log
@@ -836,7 +842,8 @@ Setelah itu, ubah agar url www.abimanyu.yyy.com/index.php/home menjadi www.abima
       Options +Indexes
     </Directory>
 
-    Alias /home /var/www/abimanyu.IT15/index.php/home
+        Alias "/home" "/var/wwww/abimanyu.IT15/home.html"
+        Alias / /var/www/abimanyu.IT15/home.html
 
     RewriteEngine On
 
