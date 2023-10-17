@@ -646,3 +646,90 @@ service php7.0-fpm start
 service php7.0-fpm status
 ```
 - Lalu jalankan command `lynx http://10.71.3.4:8003 ` *(IP Wisanggeni dan Port 8003)*
+
+### <a name="10"></a> Soal 10
+
+**Deskripsi:** 
+Gunakan algoritma Round Robin untuk Load Balancer pada Arjuna. Gunakan server_name pada soal nomor 1. Untuk melakukan pengecekan akses alamat web tersebut kemudian pastikan worker yang digunakan untuk menangani permintaan akan berganti ganti secara acak. Untuk webserver di masing-masing worker wajib berjalan di port 8001-8003.
+- Prabakusuma:8001
+- Abimanyu:8002
+- Wisanggeni:8003
+
+**Arjuna**
+- Masuk ke node `Arjuna` dengan menggunakan `telnet 192.168.0.3 5023`
+- Lakukan instalasi Nginx 
+```bash
+apt-get update
+apt install nginx php php-fpm -y
+```
+- Lakukan instalasi Lynx
+```bash
+apt-get update
+apt-get install lynx
+```
+- Jalankan perintah `service nginx start`
+- Masukkan config ke Arjuna di `/etc/nginx/sites-available/default`
+```bash
+http {
+    upstream nodes_lb {
+    		server 10.71.3.2:8001;
+server 10.71.3.3:8002;
+server 10.71.3.4:8003;  }
+}
+server {
+    listen 80;
+    listen [::]:80;
+
+    server_name arjuna.IT15.com;
+
+    location / {
+        proxy_pass http://nodes_lb;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+}
+```
+- Masukkan config ke Arjuna di ` /etc/nginx/nginx.conf`
+```bash
+user www-data;
+worker_processes auto;
+pid /run/nginx.pid;
+include /etc/nginx/modules-enabled/*.conf;
+
+events {
+    worker_connections 768;
+    # multi_accept on;
+}
+
+http {
+    upstream nodes_lb {
+      	server 10.71.3.2:8001;
+server 10.71.3.3:8002;
+server 10.71.3.4:8003;
+
+    }
+
+    server {
+        listen 80;
+        listen [::]:80;
+
+        server_name arjuna.IT15.com;
+
+        location / {
+            proxy_pass http://nodes_lb;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        }
+    }
+}
+```
+Run command :
+```bash
+ln -s /etc/nginx/sites-available/arjuna.IT15.com /etc/nginx/sites-enabled/arjuna.IT15.com
+rm /etc/nginx/sites-enabled/default
+service nginx restart
+```
+**Nakula**
+- Lalu jalankan command `lynx http://www.arjuna.IT15.com`
