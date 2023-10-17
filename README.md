@@ -20,6 +20,11 @@ Anggota Kelompok :
 - [Soal 13](#13)
 - [Soal 14](#14)
 - [Soal 15](#15)
+- [Soal 16](#16)
+- [Soal 17](#17)
+- [Soal 18](#18)
+- [Soal 19](#19)
+- [Soal 20](#20)
 
 ## <a name="1"></a> Soal 1
 **Deskripsi:** Membuat topologi sesuai dengan pembagian. Memasukkan IP prefix sesuai pembagian.
