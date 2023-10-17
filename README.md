@@ -768,7 +768,7 @@ service nginx restart
 <br>
 
 ### <a name="11"></a> Soal 11
-**Deskripsi**
+**Deskripsi:**
 Lakukan konfigurasi Apache Web Server pada worker Abimanyu dengan web server www.abimanyu.yyy.com. Pertama dibutuhkan web server dengan DocumentRoot pada /var/www/abimanyu.yyy.
 
 **Abimanyu**
@@ -820,7 +820,7 @@ lynx http://www.abimanyu.IT15.com
 <br>
 
 ### <a name="12"></a> Soal 12
-**Deskripsi**
+**Deskripsi:**
 Setelah itu, ubah agar url www.abimanyu.yyy.com/index.php/home menjadi www.abimanyu.yyy.com/home
 
 **Abimanyu**
@@ -860,63 +860,248 @@ service apache2 status
 <br>
 
 ### <a name="13"></a> Soal 13
-**Deskripsi**
+**Deskripsi:**
 Selain itu, pada subdomain www.parikesit.abimanyu.yyy.com, DocumentRoot disimpan pada /var/www/parikesit.abimanyu.yyy
 
 **Abimanyu**
+- Buat direktori `/etc/apache2/sites-available/` kemudaian buat konfigurasinya pada `/etc/apache2/sites-available/parikesit.abimanyu.IT15.conf`
+```bash
+<VirtualHost *:80>
+    ServerName parikesit.abimanyu.IT15.com
+    ServerAlias www.parikesit.abimanyu.IT15.com
+    ServerAdmin webmaster@localhost
+    DocumentRoot /var/www/parikesit.abimanyu.IT15
 
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+```
+- Ubah direktori ke `/var/www/` kemudian jalankan command-command berikut
+```
+wget --no-check-certificate 'https://docs.google.com/uc?export=download&id=1LdbYntiYVF_NVNgJis1GLCLPEGyIOreS' -O parikesit
+unzip parikesit -d parikesit.abimanyu.IT15
+rm parikesit
+mv parikesit.abimanyu.IT15/parikesit.abimanyu.yyy.com/* parikesit.abimanyu.IT15
+rm -r parikesit.abimanyu.IT15/parikesit.abimanyu.yyy.com
+a2nmod rewrite
+a2ensite parikesit.abimanyu.IT15.conf
+service apache2 reload
+service apache2 start
+```
+
+**Nakula**
+- Jalankan command `lynx http://www.parikesit.abimanyu.IT15.com`
 <img src="">
 <br>
 
 ### <a name="14"></a> Soal 14
-**Deskripsi**
+**Deskripsi:**
 Pada subdomain tersebut folder /public hanya dapat melakukan directory listing sedangkan pada folder /secret tidak dapat diakses (403 Forbidden).
 
 **Abimanyu**
+- Edit file conf pada no sebelumnya, yaitu dalam file `/etc/apache2/sites-available/parikesit.abimanyu.IT15.conf`
+```bash
+<VirtualHost *:80>
+    ServerName parikesit.abimanyu.IT15.com
+    ServerAlias www.parikesit.abimanyu.IT15.com
+    ServerAdmin webmaster@localhost
+    DocumentRoot /var/www/parikesit.abimanyu.IT15
+
+###tambahkan bagian ini###
+    <Directory /var/www/parikesit.abimanyu.IT15/public>
+       Options +Indexes
+    </Directory>
+
+    <Directory /var/www/parikesit.abimanyu.IT15/secret>
+       Options -Indexes
+    </Directory>
+######
+
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+```
+**Nakula**
+- Jalankan command `lynx http://www.parikesit.abimanyu.IT15.com/public`
 
 <img src="https://i.ibb.co/fYTT4fg/no-14.jpg">
 <br>
 
 ### <a name="15"></a> Soal 15
-**Deskripsi**
+**Deskripsi:**
 Buat kustomisasi halaman error pada folder /error untuk mengganti error kode pada Apache. Error kode yang perlu diganti adalah 404 Not Found dan 403 Forbidden.
 
+**Abimanyu**
+- Edit file conf pada no sebelumnya, yaitu dalam file `/etc/apache2/sites-available/parikesit.abimanyu.IT15.conf`
+- Tambahkan kode berikut
+```
+ErrorDocument 404 /error/404.html
+ErrorDocument 403 /error/403.html
+```
+**Nakula**
+- Jalankan command `lynx http://www.parikesit.abimanyu.IT15.com/secret`
 <img src="https://i.ibb.co/M5kN6Ps/no-15.jpg">
 <br>
 
 ### <a name="16"></a> Soal 16
-**Deskripsi**
-Buat suatu konfigurasi virtual host agar file asset www.parikesit.abimanyu.yyy.com/public/js menjadi 
+**Deskripsi:**
+Buat suatu konfigurasi virtual host agar file asset www.parikesit.abimanyu.IT15.com/public/js menjadi 
 www.parikesit.abimanyu.yyy.com/js 
 
+- Edit file conf `/etc/apache2/sites-available/parikesit.abimanyu.IT15.conf`
+- Tambahkan kode berikut 
+```bash
+Alias /js /var/www/parikesit.abimanyu.IT15/public/js
+
+RewriteEngine On
+```
+- Ubah direktori ke `/etc/apache2/sites-available/`
+- Jalankan command-command berikut
+```bash
+a2enmod rewrite
+a2ensite parikesit.abimanyu.IT15.conf
+service apache2 reload
+service apache2 start
+```
+
+**Nakula**
+- Jalankan command `lynx http://www.parikesit.abimanyu.IT15.com/js`
 
 <img src="https://i.ibb.co/9sn1tFK/no-16.jpg">
 <br>
 
 ### <a name="17"></a> Soal 17
-**Deskripsi**
-Agar aman, buat konfigurasi agar www.rjp.baratayuda.abimanyu.yyy.com hanya dapat diakses melalui port 14000 dan 14400.
+**Deskripsi:**
+Agar aman, buat konfigurasi agar www.rjp.baratayuda.abimanyu.IT15.com hanya dapat diakses melalui port 14000 dan 14400.
 
-<img src="">
+**Abimanyu**
+ - Buat konfigurasi website pada `/etc/apache2/sites-available/rjp.baratayuda.abimanyu.IT15.conf`
+```bash
+<VirtualHost *:14000 *:14400> #Konfigurasi ke port 14000 dan 14400
+    ServerName rjp.baratayuda.abimanyu.IT15.com
+    ServerAlias www.rjp.baratayuda.abimanyu.IT15.com
+    ServerAdmin webmaster@localhost
+    DocumentRoot /var/www/rjp-baratayuda-abimanyu
+
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+```
+- Masukkan kode berikut pada `/etc/apache2/ports.conf`
+```bash
+Listen 80
+Listen 14000
+Listen 14400
+
+<IfModule ssl_module>
+        Listen 443
+</IfModule>
+
+<IfModule mod_gnutls.c>
+        Listen 443
+</IfModule>
+
+# vim: syntax=apache ts=4 sw=4 sts=4 sr noet
+```
+
+**Nakula**
+- Coba jalankan command berikut
+```bash
+ lynx http://www.rjp.baratayuda.abimanyu.IT15.com
+lynx http://www.rjp.baratayuda.abimanyu.IT15.com:14000
+lynx http://www.rjp.baratayuda.abimanyu.IT15.com:14400 
+```
+- Maka akan berhasil dijalankan pada port 14000 dengan tampilan berikut
+<img src="https://i.ibb.co/wzMwPLX/no-17.jpg">
 <br>
 
 ### <a name="18"></a> Soal 18
-**Deskripsi**
-Untuk mengaksesnya, buat autentikasi username berupa “Wayang” dan password “baratayudayyy” dengan yyy merupakan kode kelompok. Letakkan DocumentRoot pada /var/www/rjp.baratayuda.abimanyu.yyy.
+**Deskripsi:**
+Membuat autentikasi dengan username “Wayang” dan password “baratayudaIT15”. Letakkan DocumentRoot pada /var/www/rjp.baratayuda.abimanyu.IT15.
 
-<img src="">
+**Abimanyu**
+- Untuk melakukan konfigurasi autentikasi user maka masuk ke dalam /etc/apache2/sites-available/
+- Jalankan command 
+```bash
+htpasswd -c /etc/apache2/.htpasswd Wayang
+```
+
+- Jalankan perintan berikut:
+```bash
+a2ensite rjp.baratayuda.abimanyu.IT15.conf
+service apache2 reload
+service apache2 start
+service apache2 status
+```
+
+**Nakula**
+- Jalankan command berikut:
+```bash
+lynx http://www.rjp.baratayuda.abimanyu.IT15.com:14000
+```
+- Masukkan user Wayang
+<img src="https://i.ibb.co/J5zMDPH/no-17-wayang.jpg">
+- Kemudian masukkan password baratayudaIT15
+<img src="https://i.ibb.co/WvGMyBJ/17-output-pass.jpg">
+
+- Selanjutnya akan muncul tampilan berikut
+<img src="https://i.ibb.co/Cnn0fMn/no-17-14000.jpg">
 <br>
 
-### <a name="19"></a> Soal 19
-**Deskripsi**
-Buat agar setiap kali mengakses IP dari Abimanyu akan secara otomatis dialihkan ke www.abimanyu.yyy.com (alias)
+## <a name="19"></a> Soal 19
+**Deskripsi:** 
+Buat agar setiap kali mengakses IP dari Abimanyu akan secara otomatis dialihkan ke www.abimanyu.IT15.com (alias)
 
-<img src="">
+**Abimanyu**
+- Masukkan ServerAlias 10.71.3.3 ke dalam /etc/apache2/sites-available/abimanyu.IT15.conf
+```bash
+<VirtualHost *:80>
+    ServerName abimanyu.IT15.com
+    ServerAlias 10.71.3.3
+    ServerAlias www.abimanyu.IT15.com
+    ServerAdmin webmaster@localhost
+    DocumentRoot /var/www/abimanyu.IT15
+
+    <Directory /var/www/abimanyu.IT15>
+        Options +Indexes
+    </Directory>
+
+    Alias "/home" "/var/www/abimanyu.IT15/home.html"
+    Alias / /var/www/abimanyu-IT15/home.html
+
+    RewriteEngine On
+
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+```
+
+**Nakula**
+- Jalankan command berikut:
+```bash
+lynx http://10.71.3.3
+```
+
+<img src="https://i.ibb.co/SV14WyF/no-19.jpg">
 <br>
 
 ### <a name="20"></a> Soal 20
 **Deskripsi**
-Karena website www.parikesit.abimanyu.yyy.com semakin banyak pengunjung dan banyak gambar gambar random, maka ubahlah request gambar yang memiliki substring “abimanyu” akan diarahkan menuju abimanyu.png.
+Ubah request gambar yang memiliki substring “abimanyu” akan diarahkan menuju abimanyu.png.
 
-<img src="">
+**Abimanyu**
+- Buka file /etc/apache2/sites-available/parikesit.abimanyu.IT15.conf
+- Isi dengan syntax berikut:
+```bash
+# Tambahkan aturan RewriteCond untuk mencocokkan permintaan yang mengandung "abimanyu"
+    RewriteCond %{REQUEST_URI} abimanyu [NC]
+
+    # Terapkan aturan RewriteRule untuk mengarahkan permintaan ke /public/images/abimanyu.png
+    RewriteRule (.*) /public/images/abimanyu.png [L]
+```
+
+**Nakula**
+- Jalankan perintah `lynx http://www.parikesit.abimanyu.IT15.com/abimanyu`
+
+<img src="https://i.ibb.co/1dp3NVq/no-20.jpg">
 <br>
