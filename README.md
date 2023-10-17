@@ -1,7 +1,9 @@
 # Jarkom Modul 2
-Anggota Kelompok :
-- Oktavia Anggraeni P. (5027211001)
-- Brigita Naraduhita P.P. (5027211055)
+
+|    Anggota Kelompok     |     NRP     |
+| ---                     | ---         |
+| Oktavia Anggraeni P.    | 5027211001  |
+| Brigita Naraduhita P.P. | 5027211055  |
 
 
 ### Topologi 5
@@ -130,6 +132,8 @@ iface eth0 inet static
 ```
 #### Pengerjaan
 Berikut topologi yang telah dibuat:
+<img src="https://i.ibb.co/YLFnfVg/topology.jpg">
+<br>
 
 ## <a name="2"></a> Soal 2
 **Deskripsi:** Membuat website utama pada node arjuna dengan akses ke arjuna.IT15.com 
@@ -185,6 +189,7 @@ nameserver 10.71.2.2
 ```bash
 ping arjuna.IT15.com -c 5
 ```
+<br>
 
 ### <a name="3"></a> Soal 3
 **Deskripsi:** Membuat website utama dengan akses ke abimanyu.IT15.com
@@ -235,6 +240,7 @@ nameserver 10.71.2.2
 ```bash
 ping abimanyu.IT15.com -c 5
 ```
+<br>
 
 ### <a name="4"></a> Soal 4
 **Deskripsi:**  Buat subdomain parikesit.abimanyu.IT15.com,  DNS di Yudhistira dan mengarah ke Abimanyu.
@@ -265,6 +271,7 @@ parikesit IN      A       10.71.3.3   ; IP Yudhistira
 ```bash
 ping parikesit.abimanyu.IT15.com -c 5
 ```
+<br>
 
 ### <a name="5"></a> Soal 5
 **Deskripsi:** reverse domain untuk domain utama (abimanyu)
@@ -307,6 +314,7 @@ apt-get install dnsutils
 ```bash
 host -t PTR 10.71.3.3
 ```
+<br>
 
 ### <a name="6"></a> Soal 6
 **Deskripsi:** Membuat DNS Slave di Werkudara sebagai cadangan jika server DNS utama di Yudhistira mengalami kegagalan
@@ -352,6 +360,8 @@ ping arjuna.IT15.com -c 5
 ping abimanyu.IT15.com -c 5
 ping parikesit.abimanyu.IT15.com -c 5
 ```
+<br>
+
 ### <a name="7"></a> Soal 7
 **Deskripsi:** Buat subdomain baratayuda.abimanyu.yyy.com yang didelegasikan dari Yudhistira ke Werkudara dengan IP menuju ke Abimanyu dalam folder Baratayuda.
 
@@ -442,6 +452,8 @@ www     IN      CNAME       baratayuda.abimanyu.IT15.com.
 ping baratayuda.abimanyu.IT15.com -c 5
 ping www.baratayuda.abimanyu.IT15.com
 ```
+<br>
+
 ### <a name="8"></a> Soal 8
 
 **Deskripsi:**  Buat subdomain melalui Werkudara dengan akses rjp.baratayuda.abimanyu.IT15.com yang mengarah ke Abimanyu.
@@ -479,10 +491,12 @@ www     IN      A       10.71.3.3
 ping rjp.baratayuda.abimanyu.IT15.com -c 5
 ping www.rjp.baratayuda.abimanyu.IT15.com -c 5
 ```
+<br>
+
 ### <a name="9"></a> Soal 9
 
 **Deskripsi:**
-Lakukan deployment pada masing-masing worker. Dengan Arjuna merupakan suatu Load Balancer Nginx dengan tiga worker yaitu Prabakusuma, Abimanyu, dan Wisanggeni.
+Lakukan deployment pada masing-masing worker. Dengan Arjuna merupakan suatu Load Balancer Nginx dengan tiga worker yaitu Prabukusuma, Abimanyu, dan Wisanggeni.
 
 **Prabukusuma**
 - Masuk ke node `Prabukusuma` dengan menggunakan `telnet 192.168.0.3 5017`
@@ -651,12 +665,13 @@ service php7.0-fpm start
 service php7.0-fpm status
 ```
 - Lalu jalankan command `lynx http://10.71.3.4:8003 ` *(IP Wisanggeni dan Port 8003)*
+<br>
 
 ### <a name="10"></a> Soal 10
 
 **Deskripsi:** 
 Gunakan algoritma Round Robin untuk Load Balancer pada Arjuna. Gunakan server_name pada soal nomor 1. Untuk melakukan pengecekan akses alamat web tersebut kemudian pastikan worker yang digunakan untuk menangani permintaan akan berganti ganti secara acak. Untuk webserver di masing-masing worker wajib berjalan di port 8001-8003.
-- Prabakusuma:8001
+- Prabukusuma:8001
 - Abimanyu:8002
 - Wisanggeni:8003
 
@@ -738,6 +753,7 @@ service nginx restart
 ```
 **Nakula**
 - Lalu jalankan command `lynx http://www.arjuna.IT15.com`
+<br>
 
 ### <a name="11"></a> Soal 11
 Lakukan konfigurasi Apache Web Server pada worker Abimanyu dengan web server www.abimanyu.yyy.com. Pertama dibutuhkan web server dengan DocumentRoot pada /var/www/abimanyu.yyy.
@@ -760,7 +776,6 @@ unzip abimanyu -d abimanyu.IT15
 mv abimanyu.IT15/abimanyu.yyy.com/* abimanyu.IT15
 rm -r abimanyu.IT15/abimanyu.yyy.com
 ```
-
 - Masukkan config ke Abimanyu di direktori `/etc/apache2/sites-available/abimanyu.IT15.conf`
 ```bash
 <VirtualHost *:80>
@@ -775,4 +790,54 @@ rm -r abimanyu.IT15/abimanyu.yyy.com
     CustomLog ${APACHE_LOG_DIR}/acces.log combined
 </VirtualHost>
 ```
+- Jalankan command untuk mengaktifkan apache2
+```bash
+a2ensite abimanyu.IT15.conf
+service apache2 reload
+service apache2 restart
+```
+**Nakula**
+- Untuk mencoba koneksi, lakukan ping website dan jalankan command lynx
+```bash
+ping http://www.abimanyu.IT15.com -c 2
+lynx http://www.abimanyu.IT15.com
+```
+<img src ="https://i.ibb.co/BV92sF2/akulahabimanyu-11.png">
+<br>
+
+### <a name="12"></a> Soal 12
+**Abimanyu**
+- Masuk kembali ke direktori conf untuk menambahkan 'alias home' `nano /etc/apache2/sites-available/abimanyu.IT15.conf `
+```bash
+<VirtualHost *:80>
+    ServerName abimanyu.IT15.com
+    ServerAlias www.abimanyu.IT15.com
+    ServerAdmin webmaster@localhost
+    DocumentRoot /var/www/abimanyu.IT15
+
+    <Directory /var/www/abimanyu.IT15>
+      Options +Indexes
+    </Directory>
+
+    Alias /home /var/www/abimanyu.IT15/index.php/home
+
+    RewriteEngine On
+
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/acces.log combined
+</VirtualHost>
+```
+
+- Jalankan command berikut ini untuk memproses file pada .conf dan untuk mengaktifkan apache2
+```bash
+cd /etc/apache2/sites-available/
+a2enmod rewrite
+a2ensite abimanyu.IT15.conf
+service apache2 reload
+service apache2 start
+service apache2 status
+```
+**Nakula**
+- Jalankan command `lynx http://www.abimanyu.IT15.com/home`
+<img source="https://i.ibb.co/2tfsFgW/akulahabimanyu-12.png">
 - 
