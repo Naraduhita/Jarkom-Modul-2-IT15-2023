@@ -134,6 +134,7 @@ Berikut topologi yang telah dibuat:
 - Ketikkan ` iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE -s 10.71.0.0/16`
 - Maka akan didapatkan `nameserver 192.168.122.1` dalam `/etc/resolv.conf`
 - Untuk memastikan telah terhubung dengan internet maka lakukan `ping google.com -c 5`
+  
 **Yudhistira**
 - Masuk ke node `Yudhistira` dengan menggunakan `telnet 192.168.0.3 5013`
 - Setting nameserver dengan `nano /etc/resolv.conf`
@@ -169,7 +170,8 @@ $TTL    604800
 @       IN      A       10.71.3.5   ; IP Arjuna
 @       IN      AAAA    ::1' 
 ```
-- Restart bind9 dengan perintah `service bind9 restart` 
+- Restart bind9 dengan perintah `service bind9 restart`
+  
 **Nakula**
 -  Masuk ke node `nakula` sebagai `client` dengan menggunakan `telnet 192.168.0.3 5009`
 -  Masukkan IP Yudhistira 
@@ -222,6 +224,7 @@ $TTL    604800
 @       IN      AAAA    ::1
 ```
 - Restart bind9 dengan perintah `service bind9 restart`
+  
 **Nakula**
 -  Masuk ke node `nakula` sebagai `client` dengan menggunakan `telnet 192.168.0.3 5009`
 -  Masukkan IP Yudhistira 
@@ -257,6 +260,7 @@ parikesit IN      A       10.71.3.3   ; IP Yudhistira
 @       IN      AAAA    ::1
 ```
 - Restart bind9 dengan perintah `service bind9 restart`
+  
 **Nakula**
 - Untuk mencoba koneksi subdomain, lakukan ping dengan: 
 ```bash
@@ -295,7 +299,6 @@ $TTL    604800
 - Restart bind9 dengan perintah `service bind9 restart`
 
 **Nakula**
-
 - Install package dnsutils
 ```bash
 apt-get update
