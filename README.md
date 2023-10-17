@@ -865,9 +865,58 @@ Selain itu, pada subdomain www.parikesit.abimanyu.yyy.com, DocumentRoot disimpan
 
 **Abimanyu**
 
+<img src="">
+<br>
 
 ### <a name="14"></a> Soal 14
 **Deskripsi**
 Pada subdomain tersebut folder /public hanya dapat melakukan directory listing sedangkan pada folder /secret tidak dapat diakses (403 Forbidden).
 
 **Abimanyu**
+
+<img src="https://i.ibb.co/fYTT4fg/no-14.jpg">
+<br>
+
+### <a name="15"></a> Soal 15
+**Deskripsi**
+Buat kustomisasi halaman error pada folder /error untuk mengganti error kode pada Apache. Error kode yang perlu diganti adalah 404 Not Found dan 403 Forbidden.
+
+<img src="https://i.ibb.co/M5kN6Ps/no-15.jpg">
+<br>
+
+### <a name="16"></a> Soal 16
+**Deskripsi**
+Buat suatu konfigurasi virtual host agar file asset www.parikesit.abimanyu.yyy.com/public/js menjadi 
+www.parikesit.abimanyu.yyy.com/js 
+
+
+<img src="https://i.ibb.co/9sn1tFK/no-16.jpg">
+<br>
+
+### <a name="17"></a> Soal 17
+**Deskripsi**
+Agar aman, buat konfigurasi agar www.rjp.baratayuda.abimanyu.yyy.com hanya dapat diakses melalui port 14000 dan 14400.
+
+<img src="">
+<br>
+
+### <a name="18"></a> Soal 18
+**Deskripsi**
+Untuk mengaksesnya, buat autentikasi username berupa “Wayang” dan password “baratayudayyy” dengan yyy merupakan kode kelompok. Letakkan DocumentRoot pada /var/www/rjp.baratayuda.abimanyu.yyy.
+
+<img src="">
+<br>
+
+### <a name="19"></a> Soal 19
+**Deskripsi**
+Buat agar setiap kali mengakses IP dari Abimanyu akan secara otomatis dialihkan ke www.abimanyu.yyy.com (alias)
+
+<img src="">
+<br>
+
+### <a name="20"></a> Soal 20
+**Deskripsi**
+Karena website www.parikesit.abimanyu.yyy.com semakin banyak pengunjung dan banyak gambar gambar random, maka ubahlah request gambar yang memiliki substring “abimanyu” akan diarahkan menuju abimanyu.png.
+
+<img src="">
+<br>
