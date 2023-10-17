@@ -768,7 +768,9 @@ service nginx restart
 <br>
 
 ### <a name="11"></a> Soal 11
+**Deskripsi**
 Lakukan konfigurasi Apache Web Server pada worker Abimanyu dengan web server www.abimanyu.yyy.com. Pertama dibutuhkan web server dengan DocumentRoot pada /var/www/abimanyu.yyy.
+
 **Abimanyu**
 - Lakukan instalasi Apache2
 ```bash
@@ -818,6 +820,9 @@ lynx http://www.abimanyu.IT15.com
 <br>
 
 ### <a name="12"></a> Soal 12
+**Deskripsi**
+Setelah itu, ubah agar url www.abimanyu.yyy.com/index.php/home menjadi www.abimanyu.yyy.com/home
+
 **Abimanyu**
 - Masuk kembali ke direktori conf untuk menambahkan 'alias home' `nano /etc/apache2/sites-available/abimanyu.IT15.conf `
 ```bash
@@ -851,6 +856,18 @@ service apache2 status
 ```
 **Nakula**
 - Jalankan command `lynx http://www.abimanyu.IT15.com/home`
-<img source="https://i.ibb.co/2tfsFgW/akulahabimanyu-12.png">
+<img src="https://i.ibb.co/2tfsFgW/akulahabimanyu-12.png">
 <br>
 
+### <a name="13"></a> Soal 13
+**Deskripsi**
+Selain itu, pada subdomain www.parikesit.abimanyu.yyy.com, DocumentRoot disimpan pada /var/www/parikesit.abimanyu.yyy
+
+**Abimanyu**
+
+
+### <a name="14"></a> Soal 14
+**Deskripsi**
+Pada subdomain tersebut folder /public hanya dapat melakukan directory listing sedangkan pada folder /secret tidak dapat diakses (403 Forbidden).
+
+**Abimanyu**
