@@ -145,6 +145,7 @@ Berikut topologi yang telah dibuat:
 apt-get update
 apt-get install bind9 -y
 ```
+- Membuka file di named.conf.local `nano /etc/bind/named.conf.local`
 - Isikan configurasi domain dengan syntax: 
 ```bash 
 zone "arjuna.IT15.com" {
@@ -195,6 +196,7 @@ ping arjuna.IT15.com -c 5
 apt-get update
 apt-get install bind9 -y
 ```
+- Membuka file di named.conf.local `nano /etc/bind/named.conf.local`
 - Isikan configurasi domain dengan syntax: 
 ```bash 
 zone "abimanyu.IT15.com" {
@@ -318,7 +320,7 @@ host -t PTR 10.71.3.3
 apt-get update
 apt-get install bind9 -y
 ```
-- Edit file /etc/bind/named.conf.local dan isikan syntax berikut:
+- Edit file `/etc/bind/named.conf.local` dan isikan syntax berikut:
 ```bash
 zone "arjuna.IT15.com" {
 	type slave;
@@ -348,6 +350,130 @@ ping arjuna.IT15.com -c 5
 ping abimanyu.IT15.com -c 5
 ping parikesit.abimanyu.IT15.com -c 5
 ```
+### <a name="7"></a> Soal 7
+**Deskripsi:** Buat subdomain baratayuda.abimanyu.yyy.com yang didelegasikan dari Yudhistira ke Werkudara dengan IP menuju ke Abimanyu dalam folder Baratayuda.
 
+**Yudhistira**
+- Buka file `nano /etc/bind/jarkom/baratayuda.abimanyu.IT15.com`
+- Tambahkan konfigurasi seperti berikut:
+```bash
+;
+; BIND data file for local loopback interface
+;
+$TTL    604800
+@       IN      SOA     baratayuda.abimanyu.IT15.com. root.baratayuda.abimanyu.IT15.com. (
+                    20221006012         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      baratayuda.abimanyu.IT15.com.
+@       IN      A1      10.71.3.3 ;IP abimanyu
+www     IN      CNAME   baratayuda.abimanyu.IT15.com.
+ns1     IN      A       10.71.2.3 ; IP werkudara
+baratayuda      IN      NS     ns1
+```
+- Buka file named.conf.options `nano /etc/bind/named.conf.options`
+- Tambahkan `allow-query{any;};` seperti berikut:
+```bash
+options {
+        directory "/var/cache/bind";
+        //dnssec-validation auto;
+        allow-query{any;};
+        auth-nxdomain no;  
+        listen-on-v6 { any; };
+};
+```
+- Edit file `/etc/bind/named.conf.local` dan isikan syntax berikut:
+```bash
+zone "baratayuda.abimanyu.IT15.com" {
+        type master;
+        file "/etc/bind/jarkom/baratayuda.abimanyu.IT15.com";
+        allow-transfer {10.71.2.3; };
+};
+```
+- Restart bind9 dengan perintah `service bind9 restart`
 
+**Werkudara**
+- Buka file named.conf.options `nano /etc/bind/named.conf.options`
+- Tambahkan `allow-query{any;};` seperti berikut:
+```bash
+options {
+        directory "/var/cache/bind";
+        //dnssec-validation auto;
+        allow-query{any;};
+        auth-nxdomain no;  
+        listen-on-v6 { any; };
+};
+```
+- Edit file `/etc/bind/named.conf.local` dan isikan syntax berikut:
+```bash
+zone "baratayuda.abimanyu.IT15.com"{
+        type master;
+        file "/etc/bind/jarkom/baratayuda.abimanyu.IT15.com"
+};
+```
+- Buat direktori baru bernama jarkom `mkdir /etc/bind/jarkom`
+- Buka file `/etc/bind/jarkom/baratayuda.abimanyu.IT15.com`
+- Tambahkan konfigurasi seperti berikut:
+```bash
+; BIND data file for local loopback interface
+;
+$TTL    604800
+@       IN      SOA     baratayuda.abimanyu.IT15.com. root.baratayuda.abimanyu.IT15.com. (
+                     2022100601         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      baratayuda.abimanyu.IT15.com.
+@       IN      A       10.71.3.3  ;abimanyu
+www     IN      CNAME       baratayuda.abimanyu.IT15.com.
+```
+- Restart bind9 dengan perintah `service bind9 restart`
 
+**Nakula**
+- Untuk mencoba koneksi maka lakukan ping pada client:
+```bash
+ping baratayuda.abimanyu.IT15.com -c 5
+ping www.baratayuda.abimanyu.IT15.com
+```
+### <a name="8"></a> Soal 8
+
+**Deskripsi:**  Buat subdomain melalui Werkudara dengan akses rjp.baratayuda.abimanyu.IT15.com yang mengarah ke Abimanyu.
+
+**Werkudara**
+- Buka file named.conf.local `nano /etc/bind/named.conf.local`
+- Isikan syntax berikut:
+```bash
+zone "rjp.baratayuda.abimanyu.IT15.com" {
+        type master;
+        file "/etc/bind/jarkom/rjp.baratayuda.abimanyu.IT15.com";
+};
+```
+- Buka file `nano /etc/bind/jarkom/rjp.baratayuda.abimanyu.IT15.com` 
+- Isikan syntax berikut:
+```bash
+; BIND data file for local loopback interface
+;
+$TTL    604800
+@       IN      SOA     rjp.baratayuda.abimanyu.IT15.com. root.rjp.baratayuda.abimanyu.IT15.com. (
+                     2022100601         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      rjp.baratayuda.abimanyu.IT15.com.
+@       IN      A       10.71.3.3  ;abimanyu
+www     IN      A       10.71.3.3
+```
+
+**Nakula**
+- Untuk mencoba koneksi maka lakukan ping pada client:
+```bash
+ping rjp.baratayuda.abimanyu.IT15.com -c 5
+ping www.rjp.baratayuda.abimanyu.IT15.com -c 5
+```
