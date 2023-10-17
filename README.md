@@ -137,10 +137,7 @@ Berikut topologi yang telah dibuat:
   
 **Yudhistira**
 - Masuk ke node `Yudhistira` dengan menggunakan `telnet 192.168.0.3 5013`
-- Setting nameserver dengan `nano /etc/resolv.conf`
- ```bash
- nameserver 192.168.122.1
- ```
+- Setting nameserver dengan `echo "nameserver 192.168.122.1" > /etc/resolv.conf`
 - Install aplikasi bind9 dengan perintah:
 ```bash
 apt-get update
@@ -189,10 +186,7 @@ ping arjuna.IT15.com -c 5
 
 **Yudhistira**
 - Masuk ke node `Yudhistira` dengan menggunakan `telnet 192.168.0.3 5013`
-- - Setting nameserver dengan `nano /etc/resolv.conf`
- ```bash
- nameserver 192.168.122.1
- ```
+- Setting nameserver dengan `echo "nameserver 192.168.122.1" > /etc/resolv.conf`
 - Install aplikasi bind9 dengan perintah:
 ```bash
 apt-get update
@@ -480,3 +474,175 @@ www     IN      A       10.71.3.3
 ping rjp.baratayuda.abimanyu.IT15.com -c 5
 ping www.rjp.baratayuda.abimanyu.IT15.com -c 5
 ```
+### <a name="9"></a> Soal 9
+
+**Deskripsi:**
+Lakukan deployment pada masing-masing worker. Dengan Arjuna merupakan suatu Load Balancer Nginx dengan tiga worker yaitu Prabakusuma, Abimanyu, dan Wisanggeni.
+
+**Prabukusuma**
+- Masuk ke node `Prabukusuma` dengan menggunakan `telnet 192.168.0.3 5017`
+- Setting nameserver dengan `echo "nameserver 192.168.122.1" > /etc/resolv.conf`
+- Lakukan instalasi Nginx 
+```bash
+apt-get update
+apt install nginx php php-fpm -y
+```
+- Lakukan instalasi Lynx
+```bash
+apt-get update
+apt-get install lynx
+```
+- Jalankan perintah `service nginx start`
+- Membuat direktori `mkdir /var/www/jarkom`
+- Buka file `nano /var/www/jarkom/index.php`
+- Isi syntax berikut:
+```bash
+<?php
+echo "ini adalah halaman Prabukusuma";
+?>
+```
+- Buat direktori `mkdir /etc/nginx/sites-available`
+- Masukkan config ke file `/etc/nginx/sites-available/jarkom` (Port:8001)
+```bash
+server {
+        listen 8001;
+        root /var/www/jarkom;
+
+        index index.php index.html index.htm;
+        server_name _;
+        location / {
+ try_files $uri $uri/ /index.php?$query_string; }
+ # pass PHP scripts to FastCGI server
+ location ~ \.php$ {
+ include snippets/fastcgi-php.conf;
+ fastcgi_pass unix:/var/run/php/php7.0-fpm.sock; }
+
+ location ~ /\.ht {
+ deny all; }
+ error_log /var/log/nginx/jarkom_error.log;
+ access_log /var/log/nginx/jarkom_access.log;
+ }
+```
+*Pastikan menggunakan port 8001, menggunakan php7.0 sesuai dengan PHP yang diinstal*
+
+- Jalankan command:
+```bash
+ln -s /etc/nginx/sites-available/jarkom /etc/nginx/sites-enabled/jarkom
+rm /etc/nginx/sites-enabled/default
+service nginx restart
+service php7.0-fpm start
+service php7.0-fpm status
+```
+- Lalu jalankan command `lynx http://10.71.3.2:8001` *(IP Prabukusuma dan Port 8001)*
+
+**Abimanyu**
+- Masuk ke node `Abimanyu` dengan menggunakan `telnet 192.168.0.3 5019`
+- Setting nameserver dengan `echo "nameserver 192.168.122.1" > /etc/resolv.conf`
+- Lakukan instalasi Nginx 
+```bash
+apt-get update
+apt install nginx php php-fpm -y
+```
+- Lakukan instalasi Lynx
+```bash
+apt-get update
+apt-get install lynx
+```
+- Jalankan perintah `service nginx start`
+- Membuat direktori `mkdir /var/www/jarkom`
+- Buka file `nano /var/www/jarkom/index.php`
+- Isi syntax berikut:
+```bash
+<?php
+echo "ini adalah halaman Abimanyu";
+?>
+```
+- Buat direktori `mkdir /etc/nginx/sites-available`
+- Masukkan config ke file `/etc/nginx/sites-available/jarkom` (Port:8002)
+```bash
+server {
+        listen 8002;
+        root /var/www/jarkom;
+
+        index index.php index.html index.htm;
+        server_name _;
+        location / {
+ try_files $uri $uri/ /index.php?$query_string; }
+ # pass PHP scripts to FastCGI server
+ location ~ \.php$ {
+ include snippets/fastcgi-php.conf;
+ fastcgi_pass unix:/var/run/php/php7.0-fpm.sock; }
+
+ location ~ /\.ht {
+ deny all; }
+ error_log /var/log/nginx/jarkom_error.log;
+ access_log /var/log/nginx/jarkom_access.log;
+ }
+```
+*Pastikan menggunakan port 8002, menggunakan php7.0 sesuai dengan PHP yang diinstal*
+
+- Jalankan command:
+```bash
+ln -s /etc/nginx/sites-available/jarkom /etc/nginx/sites-enabled/jarkom
+rm /etc/nginx/sites-enabled/default
+service nginx restart
+service php7.0-fpm start
+service php7.0-fpm status
+```
+- Lalu jalankan command `lynx  http://10.71.3.3:8002` *(IP Abimanyu dan Port 8002)*
+
+**Wisanggeni**
+- Masuk ke node `Wisanggeni` dengan menggunakan `telnet 192.168.0.3 5021`
+- Setting nameserver dengan `echo "nameserver 192.168.122.1" > /etc/resolv.conf`
+- Lakukan instalasi Nginx 
+```bash
+apt-get update
+apt install nginx php php-fpm -y
+```
+- Lakukan instalasi Lynx
+```bash
+apt-get update
+apt-get install lynx
+```
+- Jalankan perintah `service nginx start`
+- Membuat direktori `mkdir /var/www/jarkom`
+- Buka file `nano /var/www/jarkom/index.php`
+- Isi syntax berikut:
+```bash
+<?php
+echo "ini adalah halaman Wisanggeni";
+?>
+```
+- Buat direktori `mkdir /etc/nginx/sites-available`
+- Masukkan config ke file `/etc/nginx/sites-available/jarkom` (Port:8003)
+```bash
+server {
+        listen 8003;
+        root /var/www/jarkom;
+
+        index index.php index.html index.htm;
+        server_name _;
+        location / {
+ try_files $uri $uri/ /index.php?$query_string; }
+ # pass PHP scripts to FastCGI server
+ location ~ \.php$ {
+ include snippets/fastcgi-php.conf;
+ fastcgi_pass unix:/var/run/php/php7.0-fpm.sock; }
+
+ location ~ /\.ht {
+ deny all; }
+ error_log /var/log/nginx/jarkom_error.log;
+ access_log /var/log/nginx/jarkom_access.log;
+ }
+```
+*Pastikan menggunakan port 8003, menggunakan php7.0 sesuai dengan PHP yang diinstal*
+
+- Jalankan command:
+```bash
+ln -s /etc/nginx/sites-available/jarkom /etc/nginx/sites-enabled/jarkom
+rm /etc/nginx/sites-enabled/default
+service nginx restart
+service php7.0-fpm start
+service php7.0-fpm status
+```
+- Lalu jalankan command `lynx http://10.71.3.4:8003 ` *(IP Wisanggeni dan Port 8003)*
