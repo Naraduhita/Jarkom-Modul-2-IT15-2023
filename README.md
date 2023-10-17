@@ -314,7 +314,7 @@ host -t PTR 10.71.3.3
 
 **Werkudara**
 - Masuk ke node `Werkudara` dengan menggunakan `telnet 192.168.0.3 5015`
-- - Setting nameserver dengan `nano /etc/resolv.conf`
+- Setting nameserver dengan `nano /etc/resolv.conf`
  ```bash
  nameserver 192.168.122.1
  ```
