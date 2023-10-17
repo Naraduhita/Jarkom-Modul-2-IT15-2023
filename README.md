@@ -21,7 +21,7 @@ Anggota Kelompok :
 - [Soal 14](#14)
 - [Soal 15](#15)
 
-### <a name="1"></a> Soal 1
+## <a name="1"></a> Soal 1
 **Deskripsi:** Membuat topologi sesuai dengan pembagian. Memasukkan IP prefix sesuai pembagian.
 - Yudhistira : DNS master
 - Werkudara: DNS Slave
@@ -126,7 +126,7 @@ iface eth0 inet static
 #### Pengerjaan
 Berikut topologi yang telah dibuat:
 
-### <a name="2"></a> Soal 2
+## <a name="2"></a> Soal 2
 **Deskripsi:** Membuat website utama pada node arjuna dengan akses ke arjuna.IT15.com 
 
 **Pandudewanata**
