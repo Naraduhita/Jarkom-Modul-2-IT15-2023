@@ -738,3 +738,41 @@ service nginx restart
 ```
 **Nakula**
 - Lalu jalankan command `lynx http://www.arjuna.IT15.com`
+
+### <a name="11"></a> Soal 11
+Lakukan konfigurasi Apache Web Server pada worker Abimanyu dengan web server www.abimanyu.yyy.com. Pertama dibutuhkan web server dengan DocumentRoot pada /var/www/abimanyu.yyy.
+**Abimanyu**
+- Lakukan instalasi Apache2
+```bash
+apt-get update
+apt install apache2
+```
+- Lakukan instalasi wget dan unzip (jika belum)
+```bash
+apt install wget
+apt install unzip
+```
+- Masuk ke direktori untuk DocumentRoot `cd /var/www`
+- Download file resource untuk abimanyu.yyy.com, unzip, dan mengatur direktori file
+```bash
+wget --no-check-certificate 'https://docs.google.com/uc?export=download&id=1a4V23hwK9S7hQEDEcv9FL14UkkrHc-Zc' -O abimanyu
+unzip abimanyu -d abimanyu.IT15
+mv abimanyu.IT15/abimanyu.yyy.com/* abimanyu.IT15
+rm -r abimanyu.IT15/abimanyu.yyy.com
+```
+
+- Masukkan config ke Abimanyu di direktori `/etc/apache2/sites-available/abimanyu.IT15.conf`
+```bash
+<VirtualHost *:80>
+    ServerName abimanyu.IT15.com
+    ServerAlias www.abimanyu.IT15.com
+    ServerAdmin webmaster@localhost
+    DocumentRoot /var/www/abimanyu.IT15
+
+    RewriteEngine On
+
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/acces.log combined
+</VirtualHost>
+```
+- 
