@@ -143,6 +143,7 @@ Berikut topologi yang telah dibuat:
 - Ketikkan ` iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE -s 10.71.0.0/16`
 - Maka akan didapatkan `nameserver 192.168.122.1` dalam `/etc/resolv.conf`
 - Untuk memastikan telah terhubung dengan internet maka lakukan `ping google.com -c 5`
+<img src="https://i.ibb.co/L6RG850/No2-Pandudewanata.png">
   
 **Yudhistira**
 - Masuk ke node `Yudhistira` dengan menggunakan `telnet 192.168.0.3 5013`
@@ -189,6 +190,7 @@ nameserver 10.71.2.2
 ```bash
 ping arjuna.IT15.com -c 5
 ```
+<img src="https://i.ibb.co/RpJT49W/No2-Arjuna.png">
 <br>
 
 ### <a name="3"></a> Soal 3
@@ -240,6 +242,7 @@ nameserver 10.71.2.2
 ```bash
 ping abimanyu.IT15.com -c 5
 ```
+<img src="https://i.ibb.co/QX4fqFT/No3-Abimanyu.png">
 <br>
 
 ### <a name="4"></a> Soal 4
@@ -271,6 +274,7 @@ parikesit IN      A       10.71.3.3   ; IP Yudhistira
 ```bash
 ping parikesit.abimanyu.IT15.com -c 5
 ```
+<img src="https://i.ibb.co/g3hJY0G/No4-Parikesit.png">
 <br>
 
 ### <a name="5"></a> Soal 5
@@ -314,6 +318,7 @@ apt-get install dnsutils
 ```bash
 host -t PTR 10.71.3.3
 ```
+<img src="https://i.ibb.co/fDHdsDF/no-5.jpg">
 <br>
 
 ### <a name="6"></a> Soal 6
@@ -360,6 +365,7 @@ ping arjuna.IT15.com -c 5
 ping abimanyu.IT15.com -c 5
 ping parikesit.abimanyu.IT15.com -c 5
 ```
+<img src="https://i.ibb.co/py4yyjQ/no-6.jpg">
 <br>
 
 ### <a name="7"></a> Soal 7
@@ -452,6 +458,7 @@ www     IN      CNAME       baratayuda.abimanyu.IT15.com.
 ping baratayuda.abimanyu.IT15.com -c 5
 ping www.baratayuda.abimanyu.IT15.com
 ```
+<img src="https://i.ibb.co/ZS4c16T/No7-Nakula.png">
 <br>
 
 ### <a name="8"></a> Soal 8
@@ -491,6 +498,7 @@ www     IN      A       10.71.3.3
 ping rjp.baratayuda.abimanyu.IT15.com -c 5
 ping www.rjp.baratayuda.abimanyu.IT15.com -c 5
 ```
+<img src="https://i.ibb.co/jTsfz2M/No8-Abimanyu.png">
 <br>
 
 ### <a name="9"></a> Soal 9
@@ -553,6 +561,7 @@ service php7.0-fpm start
 service php7.0-fpm status
 ```
 - Lalu jalankan command `lynx http://10.71.3.2:8001` *(IP Prabukusuma dan Port 8001)*
+<img src="https://i.ibb.co/B6dzV3f/No9-Prabukusuma.png">
 
 **Abimanyu**
 - Masuk ke node `Abimanyu` dengan menggunakan `telnet 192.168.0.3 5019`
@@ -609,6 +618,7 @@ service php7.0-fpm start
 service php7.0-fpm status
 ```
 - Lalu jalankan command `lynx  http://10.71.3.3:8002` *(IP Abimanyu dan Port 8002)*
+<img src="https://i.ibb.co/Wy7ZWQ6/No9-Abimanyu.png">
 
 **Wisanggeni**
 - Masuk ke node `Wisanggeni` dengan menggunakan `telnet 192.168.0.3 5021`
@@ -665,6 +675,7 @@ service php7.0-fpm start
 service php7.0-fpm status
 ```
 - Lalu jalankan command `lynx http://10.71.3.4:8003 ` *(IP Wisanggeni dan Port 8003)*
+<img src="https://i.ibb.co/z5xDt1n/No9-wisanggeni.png">
 <br>
 
 ### <a name="10"></a> Soal 10
@@ -753,6 +764,7 @@ service nginx restart
 ```
 **Nakula**
 - Lalu jalankan command `lynx http://www.arjuna.IT15.com`
+<img src="https://i.ibb.co/F8bxGZF/No10.png">
 <br>
 
 ### <a name="11"></a> Soal 11
@@ -840,4 +852,5 @@ service apache2 status
 **Nakula**
 - Jalankan command `lynx http://www.abimanyu.IT15.com/home`
 <img source="https://i.ibb.co/2tfsFgW/akulahabimanyu-12.png">
-- 
+<br>
+
